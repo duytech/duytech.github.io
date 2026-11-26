@@ -1,7 +1,8 @@
 import type { ComponentType } from 'react'
-import { Routes, Route, Link } from 'react-router'
+import { Routes, Route, Link, NavLink } from 'react-router'
 import { UsFlag, VietnamFlag } from './Flags.tsx'
 import { useLang, useT, type Lang } from './i18n.ts'
+import { SalaryPage } from './SalaryPage.tsx'
 
 const LANGUAGES: { lang: Lang; label: string; Flag: ComponentType }[] = [
   // Labels stay in their own language so users can find theirs.
@@ -35,8 +36,11 @@ function Header() {
   const t = useT()
   return (
     <header className="site-header">
-      <nav>
-        <Link to="/">{t.navHome}</Link>
+      <nav className="site-nav">
+        <NavLink to="/" end>
+          {t.navHome}
+        </NavLink>
+        <NavLink to="/salary-calculator">{t.navSalary}</NavLink>
       </nav>
       <LanguageSwitcher />
     </header>
@@ -71,6 +75,7 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/salary-calculator" element={<SalaryPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

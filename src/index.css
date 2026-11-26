@@ -59,3 +59,93 @@ main {
   height: 20px;
   border-radius: 3px;
 }
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.site-nav a[aria-current='page'] {
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.hint {
+  opacity: 0.7;
+}
+
+.salary-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field label {
+  font-weight: 600;
+}
+
+.field input,
+.field select {
+  font: inherit;
+  padding: 8px 10px;
+  border: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+}
+
+.field option {
+  background: Canvas;
+  color: CanvasText;
+}
+
+.salary-results {
+  display: grid;
+  gap: 24px;
+}
+
+.salary-results h2 {
+  font-size: 1.1rem;
+  margin: 0 0 8px;
+}
+
+.salary-results table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.salary-results th,
+.salary-results td {
+  padding: 8px 0;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 15%, transparent);
+}
+
+.salary-results th {
+  text-align: left;
+  font-weight: normal;
+}
+
+.salary-results td {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  padding-left: 12px;
+}
+
+.salary-results tr.muted {
+  opacity: 0.7;
+}
+
+.salary-results tr.total th,
+.salary-results tr.total td {
+  font-weight: 700;
+  border-bottom: none;
+}
