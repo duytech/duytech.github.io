@@ -11,6 +11,8 @@ const vi = {
   homeIntro: 'Lưu trang này để theo dõi các dự án mới của mình!',
   notFoundTitle: 'Không tìm thấy trang',
   backHome: 'Về trang chủ',
+  toolsHeading: 'Công cụ',
+  salaryToolDesc: 'Tính lương Net, thuế TNCN và chi phí công ty theo quy định mới nhất.',
 
   locale: 'vi-VN',
   navSalary: 'Tính lương',
@@ -44,6 +46,8 @@ const en: typeof vi = {
   homeIntro: 'Bookmark this to keep an eye on my project updates!',
   notFoundTitle: 'Page not found',
   backHome: 'Back to home',
+  toolsHeading: 'Tools',
+  salaryToolDesc: 'Calculate net salary, personal income tax and employer cost under current Vietnamese rules.',
 
   locale: 'en-US',
   navSalary: 'Salary calculator',

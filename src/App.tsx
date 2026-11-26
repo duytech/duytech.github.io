@@ -53,6 +53,12 @@ function Home() {
     <>
       <h1>{t.homeTitle}</h1>
       <p>{t.homeIntro}</p>
+      <h2>{t.toolsHeading}</h2>
+      <ul>
+        <li>
+          <Link to="/salary-calculator">{t.navSalary}</Link>: {t.salaryToolDesc}
+        </li>
+      </ul>
     </>
   )
 }
