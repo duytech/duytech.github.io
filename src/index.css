@@ -7,8 +7,55 @@ body {
   margin: 0;
 }
 
+.site-header,
 main {
   max-width: 720px;
   margin: 0 auto;
-  padding: 48px 16px;
+  padding: 16px;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+main {
+  padding-top: 32px;
+}
+
+.lang-switcher {
+  display: flex;
+  gap: 8px;
+}
+
+.flag-button {
+  display: flex;
+  padding: 2px;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  background: none;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.flag-button:hover,
+.flag-button[aria-pressed='true'] {
+  opacity: 1;
+}
+
+.flag-button[aria-pressed='true'] {
+  border-color: currentColor;
+}
+
+.flag-button:focus-visible {
+  outline: 2px solid Highlight;
+  outline-offset: 2px;
+}
+
+.flag-button svg {
+  width: 30px;
+  height: 20px;
+  border-radius: 3px;
 }
