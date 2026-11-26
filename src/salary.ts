@@ -41,6 +41,8 @@ export interface SalaryInput {
   insuranceBase?: number
   region: Region
   dependents: number
+  /** All-inclusive package: gross is the total employer cost, employer insurance is paid out of it. */
+  allInclusive?: boolean
 }
 
 export interface Insurance {
@@ -82,17 +84,19 @@ function insurance(base: number, region: Region, rates: typeof EMPLOYEE_RATES): 
   return { bhxh, bhyt, bhtn, total: bhxh + bhyt + bhtn }
 }
 
-export function calcNet({ gross, insuranceBase, region, dependents }: SalaryInput): SalaryResult {
+export function calcNet({ gross, insuranceBase, region, dependents, allInclusive }: SalaryInput): SalaryResult {
   // Inputs come from a form: treat negatives as 0 and dependents as a whole number.
   gross = Math.max(0, gross)
   const base = Math.max(0, insuranceBase ?? gross)
   const deps = Math.max(0, Math.floor(dependents))
 
   const employee = insurance(base, region, EMPLOYEE_RATES)
-  const deduction = SELF_DEDUCTION + deps * DEPENDENT_DEDUCTION
-  const taxableIncome = Math.max(0, gross - employee.total - deduction)
-  const tax = calcPit(taxableIncome)
   const employer = insurance(base, region, EMPLOYER_RATES)
+  // Employer insurance paid out of an all-inclusive package is not income, so it is not taxed.
+  const income = allInclusive ? gross - employer.total : gross
+  const deduction = SELF_DEDUCTION + deps * DEPENDENT_DEDUCTION
+  const taxableIncome = Math.max(0, income - employee.total - deduction)
+  const tax = calcPit(taxableIncome)
 
   return {
     gross,
@@ -100,8 +104,8 @@ export function calcNet({ gross, insuranceBase, region, dependents }: SalaryInpu
     deduction,
     taxableIncome,
     tax,
-    net: gross - employee.total - tax,
+    net: income - employee.total - tax,
     employer,
-    employerCost: gross + employer.total,
+    employerCost: allInclusive ? gross : gross + employer.total,
   }
 }

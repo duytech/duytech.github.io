@@ -81,6 +81,24 @@ describe('calcNet', () => {
     expect(bhtn(4)).toBe(740_000)
   })
 
+  test('30M all-inclusive: employer insurance paid from salary, untaxed', () => {
+    const r = calcNet({ gross: 30_000_000, region: 1, dependents: 0, allInclusive: true })
+    expect(r.employer.total).toBe(6_450_000)
+    expect(r.employee.total).toBe(3_150_000)
+    expect(r.taxableIncome).toBe(4_900_000)
+    expect(r.tax).toBe(245_000)
+    expect(r.net).toBe(20_155_000)
+    expect(r.employerCost).toBe(30_000_000)
+  })
+
+  test('120M all-inclusive: insurance capped', () => {
+    const r = calcNet({ gross: 120_000_000, region: 1, dependents: 0, allInclusive: true })
+    expect(r.taxableIncome).toBe(87_196_000)
+    expect(r.tax).toBe(16_658_800)
+    expect(r.net).toBe(86_037_200)
+    expect(r.employerCost).toBe(120_000_000)
+  })
+
   test('gross 0', () => {
     const r = calcNet({ gross: 0, region: 1, dependents: 0 })
     expect(r.employee.total).toBe(0)
