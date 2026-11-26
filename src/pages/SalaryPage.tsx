@@ -21,13 +21,16 @@ export function SalaryPage() {
   const [insuranceBase, setInsuranceBase] = useState<number | undefined>()
   const [region, setRegion] = useState<Region>(1)
   const [dependents, setDependents] = useState(0)
+  const [allInclusive, setAllInclusive] = useState(false)
 
   const money = new Intl.NumberFormat(t.locale, { style: 'currency', currency: 'VND' })
   const percent = new Intl.NumberFormat(t.locale, { style: 'percent', maximumFractionDigits: 1 })
   const date = new Intl.DateTimeFormat(t.locale, { day: 'numeric', month: 'long', year: 'numeric' }).format(
     new Date(`${EFFECTIVE_FROM}T00:00:00`),
   )
-  const result = gross ? calcNet({ gross, insuranceBase, region, dependents }) : undefined
+  // All-inclusive: employer insurance is already inside gross, so it is not added on top.
+  const plus = allInclusive ? '' : '+'
+  const result = gross ? calcNet({ gross, insuranceBase, region, dependents, allInclusive }) : undefined
 
   return (
     <>
@@ -73,6 +76,12 @@ export function SalaryPage() {
           onChange={setInsuranceBase}
           locale={t.locale}
         />
+        <div className="field checkbox-field">
+          <label>
+            <input type="checkbox" checked={allInclusive} onChange={(e) => setAllInclusive(e.target.checked)} />
+            {t.allInclusiveLabel}
+          </label>
+        </div>
       </form>
 
       {result ? (
@@ -85,7 +94,13 @@ export function SalaryPage() {
                 <ResultRow label={`${t.bhxh} (${percent.format(EMPLOYEE_RATES.bhxh)})`} value={`−${money.format(result.employee.bhxh)}`} />
                 <ResultRow label={`${t.bhyt} (${percent.format(EMPLOYEE_RATES.bhyt)})`} value={`−${money.format(result.employee.bhyt)}`} />
                 <ResultRow label={`${t.bhtn} (${percent.format(EMPLOYEE_RATES.bhtn)})`} value={`−${money.format(result.employee.bhtn)}`} />
-                <ResultRow label={t.deduction} value={money.format(result.deduction)} muted />
+                {allInclusive && (
+                  <ResultRow
+                    label={`${t.employerInsurance} (${percent.format(EMPLOYER_RATES.bhxh + EMPLOYER_RATES.bhyt + EMPLOYER_RATES.bhtn)})`}
+                    value={`−${money.format(result.employer.total)}`}
+                  />
+                )}
+                <ResultRow label={t.deduction}value={money.format(result.deduction)} muted />
                 <ResultRow label={t.taxableIncome} value={money.format(result.taxableIncome)} muted />
                 <ResultRow label={t.tax} value={`−${money.format(result.tax)}`} />
                 <ResultRow label={t.net} value={money.format(result.net)} total />
@@ -97,9 +112,9 @@ export function SalaryPage() {
             <table>
               <tbody>
                 <ResultRow label={t.gross} value={money.format(result.gross)} />
-                <ResultRow label={`${t.bhxh} (${percent.format(EMPLOYER_RATES.bhxh)})`} value={`+${money.format(result.employer.bhxh)}`} />
-                <ResultRow label={`${t.bhyt} (${percent.format(EMPLOYER_RATES.bhyt)})`} value={`+${money.format(result.employer.bhyt)}`} />
-                <ResultRow label={`${t.bhtn} (${percent.format(EMPLOYER_RATES.bhtn)})`} value={`+${money.format(result.employer.bhtn)}`} />
+                <ResultRow label={`${t.bhxh} (${percent.format(EMPLOYER_RATES.bhxh)})`} value={`${plus}${money.format(result.employer.bhxh)}`} />
+                <ResultRow label={`${t.bhyt} (${percent.format(EMPLOYER_RATES.bhyt)})`} value={`${plus}${money.format(result.employer.bhyt)}`} />
+                <ResultRow label={`${t.bhtn} (${percent.format(EMPLOYER_RATES.bhtn)})`} value={`${plus}${money.format(result.employer.bhtn)}`} />
                 <ResultRow label={t.employerCost} value={money.format(result.employerCost)} total />
               </tbody>
             </table>
