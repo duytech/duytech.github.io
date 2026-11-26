@@ -1,47 +1,17 @@
 import { useId, useState } from 'react'
-import { useT } from './i18n.ts'
-import { formatMoneyInput, parseMoney } from './money.ts'
+import { MoneyField } from '../components/MoneyField.tsx'
+import { ResultRow } from '../components/ResultRow.tsx'
+import { useT } from '../i18n.ts'
 import {
   EFFECTIVE_FROM,
   EMPLOYEE_RATES,
   EMPLOYER_RATES,
   calcNet,
   type Region,
-} from './salary.ts'
+} from '../salary.ts'
 
 const REGIONS: Region[] = [1, 2, 3, 4]
 const MAX_DEPENDENTS = 20
-
-interface MoneyFieldProps {
-  label: string
-  hint?: string
-  value: number | undefined
-  onChange: (value: number | undefined) => void
-  locale: string
-}
-
-function MoneyField({ label, hint, value, onChange, locale }: MoneyFieldProps) {
-  const id = useId()
-  return (
-    <div className="field">
-      <label htmlFor={id}>{label}</label>
-      <input
-        id={id}
-        type="text"
-        inputMode="numeric"
-        autoComplete="off"
-        value={formatMoneyInput(value, locale)}
-        onChange={(e) => onChange(parseMoney(e.target.value))}
-        aria-describedby={hint ? `${id}-hint` : undefined}
-      />
-      {hint && (
-        <small id={`${id}-hint`} className="hint">
-          {hint}
-        </small>
-      )}
-    </div>
-  )
-}
 
 export function SalaryPage() {
   const t = useT()
@@ -111,14 +81,14 @@ export function SalaryPage() {
             <h2>{t.employeeHeading}</h2>
             <table>
               <tbody>
-                <Row label={t.gross} value={money.format(result.gross)} />
-                <Row label={`${t.bhxh} (${percent.format(EMPLOYEE_RATES.bhxh)})`} value={`−${money.format(result.employee.bhxh)}`} />
-                <Row label={`${t.bhyt} (${percent.format(EMPLOYEE_RATES.bhyt)})`} value={`−${money.format(result.employee.bhyt)}`} />
-                <Row label={`${t.bhtn} (${percent.format(EMPLOYEE_RATES.bhtn)})`} value={`−${money.format(result.employee.bhtn)}`} />
-                <Row label={t.deduction} value={money.format(result.deduction)} muted />
-                <Row label={t.taxableIncome} value={money.format(result.taxableIncome)} muted />
-                <Row label={t.tax} value={`−${money.format(result.tax)}`} />
-                <Row label={t.net} value={money.format(result.net)} total />
+                <ResultRow label={t.gross} value={money.format(result.gross)} />
+                <ResultRow label={`${t.bhxh} (${percent.format(EMPLOYEE_RATES.bhxh)})`} value={`−${money.format(result.employee.bhxh)}`} />
+                <ResultRow label={`${t.bhyt} (${percent.format(EMPLOYEE_RATES.bhyt)})`} value={`−${money.format(result.employee.bhyt)}`} />
+                <ResultRow label={`${t.bhtn} (${percent.format(EMPLOYEE_RATES.bhtn)})`} value={`−${money.format(result.employee.bhtn)}`} />
+                <ResultRow label={t.deduction} value={money.format(result.deduction)} muted />
+                <ResultRow label={t.taxableIncome} value={money.format(result.taxableIncome)} muted />
+                <ResultRow label={t.tax} value={`−${money.format(result.tax)}`} />
+                <ResultRow label={t.net} value={money.format(result.net)} total />
               </tbody>
             </table>
           </section>
@@ -126,11 +96,11 @@ export function SalaryPage() {
             <h2>{t.employerHeading}</h2>
             <table>
               <tbody>
-                <Row label={t.gross} value={money.format(result.gross)} />
-                <Row label={`${t.bhxh} (${percent.format(EMPLOYER_RATES.bhxh)})`} value={`+${money.format(result.employer.bhxh)}`} />
-                <Row label={`${t.bhyt} (${percent.format(EMPLOYER_RATES.bhyt)})`} value={`+${money.format(result.employer.bhyt)}`} />
-                <Row label={`${t.bhtn} (${percent.format(EMPLOYER_RATES.bhtn)})`} value={`+${money.format(result.employer.bhtn)}`} />
-                <Row label={t.employerCost} value={money.format(result.employerCost)} total />
+                <ResultRow label={t.gross} value={money.format(result.gross)} />
+                <ResultRow label={`${t.bhxh} (${percent.format(EMPLOYER_RATES.bhxh)})`} value={`+${money.format(result.employer.bhxh)}`} />
+                <ResultRow label={`${t.bhyt} (${percent.format(EMPLOYER_RATES.bhyt)})`} value={`+${money.format(result.employer.bhyt)}`} />
+                <ResultRow label={`${t.bhtn} (${percent.format(EMPLOYER_RATES.bhtn)})`} value={`+${money.format(result.employer.bhtn)}`} />
+                <ResultRow label={t.employerCost} value={money.format(result.employerCost)} total />
               </tbody>
             </table>
           </section>
@@ -139,14 +109,5 @@ export function SalaryPage() {
         <p className="hint">{t.enterGross}</p>
       )}
     </>
-  )
-}
-
-function Row({ label, value, total, muted }: { label: string; value: string; total?: boolean; muted?: boolean }) {
-  return (
-    <tr className={total ? 'total' : muted ? 'muted' : undefined}>
-      <th scope="row">{label}</th>
-      <td>{value}</td>
-    </tr>
   )
 }

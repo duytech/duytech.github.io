@@ -1,78 +1,8 @@
-import type { ComponentType } from 'react'
-import { Routes, Route, Link, NavLink } from 'react-router'
-import { UsFlag, VietnamFlag } from './Flags.tsx'
-import { useLang, useT, type Lang } from './i18n.ts'
-import { SalaryPage } from './SalaryPage.tsx'
-
-const LANGUAGES: { lang: Lang; label: string; Flag: ComponentType }[] = [
-  // Labels stay in their own language so users can find theirs.
-  { lang: 'vi', label: 'Tiếng Việt', Flag: VietnamFlag },
-  { lang: 'en', label: 'English', Flag: UsFlag },
-]
-
-function LanguageSwitcher() {
-  const { lang, setLang } = useLang()
-  const t = useT()
-  return (
-    <div className="lang-switcher" role="group" aria-label={t.switchLanguage}>
-      {LANGUAGES.map(({ lang: code, label, Flag }) => (
-        <button
-          key={code}
-          type="button"
-          className="flag-button"
-          aria-label={label}
-          title={label}
-          aria-pressed={lang === code}
-          onClick={() => setLang(code)}
-        >
-          <Flag />
-        </button>
-      ))}
-    </div>
-  )
-}
-
-function Header() {
-  const t = useT()
-  return (
-    <header className="site-header">
-      <nav className="site-nav">
-        <NavLink to="/" end>
-          {t.navHome}
-        </NavLink>
-        <NavLink to="/salary-calculator">{t.navSalary}</NavLink>
-      </nav>
-      <LanguageSwitcher />
-    </header>
-  )
-}
-
-function Home() {
-  const t = useT()
-  return (
-    <>
-      <h1>{t.homeTitle}</h1>
-      <p>{t.homeIntro}</p>
-      <h2>{t.toolsHeading}</h2>
-      <ul>
-        <li>
-          <Link to="/salary-calculator">{t.navSalary}</Link>: {t.salaryToolDesc}
-        </li>
-      </ul>
-    </>
-  )
-}
-
-// GitHub Pages serves 404.html (a copy of index.html) for unknown paths, so this catch-all renders for them.
-function NotFound() {
-  const t = useT()
-  return (
-    <>
-      <h1>{t.notFoundTitle}</h1>
-      <Link to="/">{t.backHome}</Link>
-    </>
-  )
-}
+import { Routes, Route } from 'react-router'
+import { Header } from './components/Header.tsx'
+import { HomePage } from './pages/HomePage.tsx'
+import { NotFoundPage } from './pages/NotFoundPage.tsx'
+import { SalaryPage } from './pages/SalaryPage.tsx'
 
 function App() {
   return (
@@ -80,9 +10,9 @@ function App() {
       <Header />
       <main>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/salary-calculator" element={<SalaryPage />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
     </>
