@@ -1,7 +1,7 @@
 import { useId, useState } from 'react'
 import { MoneyField } from '../components/MoneyField.tsx'
 import { ResultRow } from '../components/ResultRow.tsx'
-import { useT } from '../i18n.ts'
+import { useText } from '../i18n.ts'
 import {
   EFFECTIVE_FROM,
   EMPLOYEE_RATES,
@@ -14,7 +14,7 @@ const REGIONS: Region[] = [1, 2, 3, 4]
 const MAX_DEPENDENTS = 20
 
 export function SalaryPage() {
-  const t = useT()
+  const text = useText()
   const regionId = useId()
   const dependentsId = useId()
   const [gross, setGross] = useState<number | undefined>()
@@ -23,9 +23,9 @@ export function SalaryPage() {
   const [dependents, setDependents] = useState(0)
   const [allInclusive, setAllInclusive] = useState(false)
 
-  const money = new Intl.NumberFormat(t.locale, { style: 'currency', currency: 'VND' })
-  const percent = new Intl.NumberFormat(t.locale, { style: 'percent', maximumFractionDigits: 1 })
-  const date = new Intl.DateTimeFormat(t.locale, { day: 'numeric', month: 'long', year: 'numeric' }).format(
+  const money = new Intl.NumberFormat(text.locale, { style: 'currency', currency: 'VND' })
+  const percent = new Intl.NumberFormat(text.locale, { style: 'percent', maximumFractionDigits: 1 })
+  const date = new Intl.DateTimeFormat(text.locale, { day: 'numeric', month: 'long', year: 'numeric' }).format(
     new Date(`${EFFECTIVE_FROM}T00:00:00`),
   )
   // All-inclusive: employer insurance is already inside gross, so it is not added on top.
@@ -34,15 +34,15 @@ export function SalaryPage() {
 
   return (
     <>
-      <h1>{t.salaryTitle}</h1>
+      <h1>{text.salaryTitle}</h1>
       <p className="hint">
-        {t.effectiveFrom} {date}
+        {text.effectiveFrom} {date}
       </p>
 
       <form className="salary-form" onSubmit={(e) => e.preventDefault()}>
-        <MoneyField label={t.grossLabel} value={gross} onChange={setGross} locale={t.locale} />
+        <MoneyField label={text.grossLabel} value={gross} onChange={setGross} locale={text.locale} />
         <div className="field">
-          <label htmlFor={regionId}>{t.regionLabel}</label>
+          <label htmlFor={regionId}>{text.regionLabel}</label>
           <select
             id={regionId}
             value={region}
@@ -50,13 +50,13 @@ export function SalaryPage() {
           >
             {REGIONS.map((r) => (
               <option key={r} value={r}>
-                {t.regionNames[r - 1]}
+                {text.regionNames[r - 1]}
               </option>
             ))}
           </select>
         </div>
         <div className="field">
-          <label htmlFor={dependentsId}>{t.dependentsLabel}</label>
+          <label htmlFor={dependentsId}>{text.dependentsLabel}</label>
           <input
             id={dependentsId}
             type="number"
@@ -70,16 +70,16 @@ export function SalaryPage() {
           />
         </div>
         <MoneyField
-          label={t.insuranceBaseLabel}
-          hint={t.insuranceBaseHint}
+          label={text.insuranceBaseLabel}
+          hint={text.insuranceBaseHint}
           value={insuranceBase}
           onChange={setInsuranceBase}
-          locale={t.locale}
+          locale={text.locale}
         />
         <div className="field checkbox-field">
           <label>
             <input type="checkbox" checked={allInclusive} onChange={(e) => setAllInclusive(e.target.checked)} />
-            {t.allInclusiveLabel}
+            {text.allInclusiveLabel}
           </label>
         </div>
       </form>
@@ -87,41 +87,41 @@ export function SalaryPage() {
       {result ? (
         <div className="salary-results" aria-live="polite">
           <section>
-            <h2>{t.employeeHeading}</h2>
+            <h2>{text.employeeHeading}</h2>
             <table>
               <tbody>
-                <ResultRow label={t.gross} value={money.format(result.gross)} />
-                <ResultRow label={`${t.bhxh} (${percent.format(EMPLOYEE_RATES.bhxh)})`} value={`−${money.format(result.employee.bhxh)}`} />
-                <ResultRow label={`${t.bhyt} (${percent.format(EMPLOYEE_RATES.bhyt)})`} value={`−${money.format(result.employee.bhyt)}`} />
-                <ResultRow label={`${t.bhtn} (${percent.format(EMPLOYEE_RATES.bhtn)})`} value={`−${money.format(result.employee.bhtn)}`} />
+                <ResultRow label={text.gross} value={money.format(result.gross)} />
+                <ResultRow label={`${text.bhxh} (${percent.format(EMPLOYEE_RATES.bhxh)})`} value={`−${money.format(result.employee.bhxh)}`} />
+                <ResultRow label={`${text.bhyt} (${percent.format(EMPLOYEE_RATES.bhyt)})`} value={`−${money.format(result.employee.bhyt)}`} />
+                <ResultRow label={`${text.bhtn} (${percent.format(EMPLOYEE_RATES.bhtn)})`} value={`−${money.format(result.employee.bhtn)}`} />
                 {allInclusive && (
                   <ResultRow
-                    label={`${t.employerInsurance} (${percent.format(EMPLOYER_RATES.bhxh + EMPLOYER_RATES.bhyt + EMPLOYER_RATES.bhtn)})`}
+                    label={`${text.employerInsurance} (${percent.format(EMPLOYER_RATES.bhxh + EMPLOYER_RATES.bhyt + EMPLOYER_RATES.bhtn)})`}
                     value={`−${money.format(result.employer.total)}`}
                   />
                 )}
-                <ResultRow label={t.deduction}value={money.format(result.deduction)} muted />
-                <ResultRow label={t.taxableIncome} value={money.format(result.taxableIncome)} muted />
-                <ResultRow label={t.tax} value={`−${money.format(result.tax)}`} />
-                <ResultRow label={t.net} value={money.format(result.net)} total />
+                <ResultRow label={text.deduction}value={money.format(result.deduction)} muted />
+                <ResultRow label={text.taxableIncome} value={money.format(result.taxableIncome)} muted />
+                <ResultRow label={text.tax} value={`−${money.format(result.tax)}`} />
+                <ResultRow label={text.net} value={money.format(result.net)} total />
               </tbody>
             </table>
           </section>
           <section>
-            <h2>{t.employerHeading}</h2>
+            <h2>{text.employerHeading}</h2>
             <table>
               <tbody>
-                <ResultRow label={t.gross} value={money.format(result.gross)} />
-                <ResultRow label={`${t.bhxh} (${percent.format(EMPLOYER_RATES.bhxh)})`} value={`${plus}${money.format(result.employer.bhxh)}`} />
-                <ResultRow label={`${t.bhyt} (${percent.format(EMPLOYER_RATES.bhyt)})`} value={`${plus}${money.format(result.employer.bhyt)}`} />
-                <ResultRow label={`${t.bhtn} (${percent.format(EMPLOYER_RATES.bhtn)})`} value={`${plus}${money.format(result.employer.bhtn)}`} />
-                <ResultRow label={t.employerCost} value={money.format(result.employerCost)} total />
+                <ResultRow label={text.gross} value={money.format(result.gross)} />
+                <ResultRow label={`${text.bhxh} (${percent.format(EMPLOYER_RATES.bhxh)})`} value={`${plus}${money.format(result.employer.bhxh)}`} />
+                <ResultRow label={`${text.bhyt} (${percent.format(EMPLOYER_RATES.bhyt)})`} value={`${plus}${money.format(result.employer.bhyt)}`} />
+                <ResultRow label={`${text.bhtn} (${percent.format(EMPLOYER_RATES.bhtn)})`} value={`${plus}${money.format(result.employer.bhtn)}`} />
+                <ResultRow label={text.employerCost} value={money.format(result.employerCost)} total />
               </tbody>
             </table>
           </section>
         </div>
       ) : (
-        <p className="hint">{t.enterGross}</p>
+        <p className="hint">{text.enterGross}</p>
       )}
     </>
   )

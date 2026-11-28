@@ -1,22 +1,22 @@
 import { Link } from 'react-router'
-import { useT } from '../i18n.ts'
+import { useText } from '../i18n.ts'
 
 export function HomePage() {
-  const t = useT()
+  const text = useText()
   return (
     <>
-      <h1>{t.homeTitle}</h1>
-      <p>{t.homeIntro}</p>
-      <h2>{t.toolsHeading}</h2>
+      <h1>{text.homeTitle}</h1>
+      <p>{text.homeIntro}</p>
+      <h2>{text.toolsHeading}</h2>
       <ul>
         <li>
-          <Link to="/salary-calculator">{t.navSalary}</Link>: {t.salaryToolDesc}
+          <Link to="/salary-calculator">{text.navSalary}</Link>: {text.salaryToolDesc}
         </li>
         <li>
-          <Link to="/loan-calculator">{t.navLoan}</Link>: {t.loanToolDesc}
+          <Link to="/loan-calculator">{text.navLoan}</Link>: {text.loanToolDesc}
         </li>
         <li>
-          <Link to="/cagr-calculator">{t.navCagr}</Link>: {t.cagrToolDesc}
+          <Link to="/cagr-calculator">{text.navCagr}</Link>: {text.cagrToolDesc}
         </li>
       </ul>
     </>
