@@ -1,6 +1,7 @@
 import { useId, useState } from 'react'
 import { MoneyField } from '../components/MoneyField.tsx'
 import { ResultRow } from '../components/ResultRow.tsx'
+import { TaxBracketTable } from '../components/TaxBracketTable.tsx'
 import { useText } from '../i18n.ts'
 import {
   EFFECTIVE_FROM,
@@ -107,6 +108,7 @@ export function SalaryPage() {
               </tbody>
             </table>
           </section>
+          <TaxBracketTable brackets={result.taxBrackets} money={money} percent={percent} />
           <section>
             <h2>{text.employerHeading}</h2>
             <table>

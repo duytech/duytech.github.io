@@ -58,6 +58,7 @@ export interface SalaryResult {
   deduction: number
   taxableIncome: number
   tax: number
+  taxBrackets: TaxBracketRow[]
   net: number
   employer: Insurance
   employerCost: number
@@ -73,6 +74,30 @@ export function calculatePersonalIncomeTax(taxableIncome: number): number {
     lower = upper
   }
   return Math.round(tax)
+}
+
+export interface TaxBracketRow {
+  level: number
+  lower: number
+  upper: number
+  rate: number
+  /** Part of taxable income that falls in this bracket. */
+  taxedAmount: number
+  tax: number
+}
+
+/** The brackets a taxable income reaches, with the tax of each.
+ * shortcut: each row is rounded on its own, so the rows can differ from calculatePersonalIncomeTax by 1₫ on odd amounts; the total stays the reference. */
+export function calculateTaxBrackets(taxableIncome: number): TaxBracketRow[] {
+  const rows: TaxBracketRow[] = []
+  let lower = 0
+  for (const [upper, rate] of TAX_BRACKETS) {
+    if (taxableIncome <= lower) break
+    const taxedAmount = Math.min(taxableIncome, upper) - lower
+    rows.push({ level: rows.length + 1, lower, upper, rate, taxedAmount, tax: Math.round(taxedAmount * rate) })
+    lower = upper
+  }
+  return rows
 }
 
 function insurance(base: number, region: Region, rates: typeof EMPLOYEE_RATES): Insurance {
@@ -104,6 +129,7 @@ export function calculateNetSalary({ gross, insuranceBase, region, dependents, a
     deduction,
     taxableIncome,
     tax,
+    taxBrackets: calculateTaxBrackets(taxableIncome),
     net: income - employee.total - tax,
     employer,
     employerCost: allInclusive ? gross : gross + employer.total,

@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { calculateNetSalary, calculatePersonalIncomeTax } from './salary'
+import { calculateNetSalary, calculatePersonalIncomeTax, calculateTaxBrackets } from './salary'
 
 // Expected values are worked out by hand from the rules in salary.ts (effective 01/07/2026).
 
@@ -14,6 +14,30 @@ describe('calculatePersonalIncomeTax', () => {
     [101_000_000, 20_850_000],
   ])('taxable %i → %i', (taxable, tax) => {
     expect(calculatePersonalIncomeTax(taxable)).toBe(tax)
+  })
+})
+
+describe('calculateTaxBrackets', () => {
+  test('no taxable income: no brackets', () => {
+    expect(calculateTaxBrackets(0)).toEqual([])
+  })
+
+  test('11.35M reaches 2 brackets', () => {
+    expect(calculateTaxBrackets(11_350_000)).toEqual([
+      { level: 1, lower: 0, upper: 10_000_000, rate: 0.05, taxedAmount: 10_000_000, tax: 500_000 },
+      { level: 2, lower: 10_000_000, upper: 30_000_000, rate: 0.1, taxedAmount: 1_350_000, tax: 135_000 },
+    ])
+  })
+
+  test('101M reaches the top bracket', () => {
+    const rows = calculateTaxBrackets(101_000_000)
+    expect(rows).toHaveLength(5)
+    expect(rows[4]).toMatchObject({ lower: 100_000_000, upper: Infinity, taxedAmount: 1_000_000, tax: 350_000 })
+  })
+
+  test.each([10_000_000, 11_350_000, 98_631_000, 101_000_000])('rows add up to the total tax for %i', (taxable) => {
+    const sum = calculateTaxBrackets(taxable).reduce((total, row) => total + row.tax, 0)
+    expect(sum).toBe(calculatePersonalIncomeTax(taxable))
   })
 })
 
