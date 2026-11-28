@@ -58,6 +58,16 @@ const vi = {
   colBalance: 'Dư nợ còn lại',
   enterLoan: 'Nhập số tiền vay, lãi suất và thời gian vay để xem kết quả.',
   loanDisclaimer: 'Kết quả chỉ mang tính tham khảo, lãi suất thực tế tùy ngân hàng.',
+
+  navCagr: 'Tính CAGR',
+  cagrToolDesc: 'Tính tốc độ tăng trưởng kép hàng năm (CAGR) từ giá trị đầu, giá trị cuối và số năm.',
+  cagrTitle: 'Tính tốc độ tăng trưởng kép hàng năm (CAGR)',
+  startValueLabel: 'Giá trị ban đầu (VNĐ)',
+  endValueLabel: 'Giá trị cuối kỳ (VNĐ)',
+  yearsLabel: 'Số năm',
+  totalGrowth: 'Tổng tăng trưởng',
+  cagrResult: 'CAGR (%/năm)',
+  enterCagr: 'Nhập giá trị ban đầu, giá trị cuối kỳ và số năm để xem kết quả.',
 }
 
 // Typed from `vi`, so a missing or extra key is a compile error.
@@ -115,6 +125,16 @@ const en: typeof vi = {
   colBalance: 'Remaining balance',
   enterLoan: 'Enter the loan amount, interest rate and term to see the result.',
   loanDisclaimer: 'Results are for reference only; actual rates depend on the bank.',
+
+  navCagr: 'CAGR calculator',
+  cagrToolDesc: 'Calculate compound annual growth rate (CAGR) from a start value, end value and number of years.',
+  cagrTitle: 'Compound annual growth rate (CAGR) calculator',
+  startValueLabel: 'Start value (VND)',
+  endValueLabel: 'End value (VND)',
+  yearsLabel: 'Number of years',
+  totalGrowth: 'Total growth',
+  cagrResult: 'CAGR (% per year)',
+  enterCagr: 'Enter the start value, end value and number of years to see the result.',
 }
 
 export type Dictionary = typeof vi

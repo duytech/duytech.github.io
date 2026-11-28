@@ -12,6 +12,7 @@ export function Header() {
         </NavLink>
         <NavLink to="/salary-calculator">{t.navSalary}</NavLink>
         <NavLink to="/loan-calculator">{t.navLoan}</NavLink>
+        <NavLink to="/cagr-calculator">{t.navCagr}</NavLink>
       </nav>
       <LanguageSwitcher />
     </header>

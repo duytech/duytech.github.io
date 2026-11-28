@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router'
+import { CagrPage } from './pages/CagrPage.tsx'
 import { Header } from './components/Header.tsx'
 import { HomePage } from './pages/HomePage.tsx'
 import { LoanPage } from './pages/LoanPage.tsx'
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/salary-calculator" element={<SalaryPage />} />
           <Route path="/loan-calculator" element={<LoanPage />} />
+          <Route path="/cagr-calculator" element={<CagrPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
