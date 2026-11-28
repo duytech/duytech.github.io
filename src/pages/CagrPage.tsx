@@ -2,29 +2,29 @@ import { useId, useState } from 'react'
 import { MoneyField } from '../components/MoneyField.tsx'
 import { ResultRow } from '../components/ResultRow.tsx'
 import { calculateCagr } from '../cagr.ts'
-import { useT } from '../i18n.ts'
+import { useText } from '../i18n.ts'
 
 export function CagrPage() {
-  const t = useT()
+  const text = useText()
   const yearsId = useId()
   const [startValue, setStartValue] = useState<number | undefined>()
   const [endValue, setEndValue] = useState<number | undefined>()
   const [years, setYears] = useState('')
 
-  const percent = new Intl.NumberFormat(t.locale, { style: 'percent', maximumFractionDigits: 2 })
+  const percent = new Intl.NumberFormat(text.locale, { style: 'percent', maximumFractionDigits: 2 })
   const period = Number(years)
   const valid = startValue && endValue !== undefined && years !== '' && period > 0
   const result = valid ? calculateCagr(startValue, endValue, period) : undefined
 
   return (
     <>
-      <h1>{t.cagrTitle}</h1>
+      <h1>{text.cagrTitle}</h1>
 
       <form className="salary-form" onSubmit={(e) => e.preventDefault()}>
-        <MoneyField label={t.startValueLabel} value={startValue} onChange={setStartValue} locale={t.locale} />
-        <MoneyField label={t.endValueLabel} value={endValue} onChange={setEndValue} locale={t.locale} />
+        <MoneyField label={text.startValueLabel} value={startValue} onChange={setStartValue} locale={text.locale} />
+        <MoneyField label={text.endValueLabel} value={endValue} onChange={setEndValue} locale={text.locale} />
         <div className="field">
-          <label htmlFor={yearsId}>{t.yearsLabel}</label>
+          <label htmlFor={yearsId}>{text.yearsLabel}</label>
           <input
             id={yearsId}
             type="number"
@@ -42,14 +42,14 @@ export function CagrPage() {
           <section>
             <table>
               <tbody>
-                <ResultRow label={t.totalGrowth} value={percent.format(result.totalGrowth)} />
-                <ResultRow label={t.cagrResult} value={percent.format(result.cagr)} total />
+                <ResultRow label={text.totalGrowth} value={percent.format(result.totalGrowth)} />
+                <ResultRow label={text.cagrResult} value={percent.format(result.cagr)} total />
               </tbody>
             </table>
           </section>
         </div>
       ) : (
-        <p className="hint">{t.enterCagr}</p>
+        <p className="hint">{text.enterCagr}</p>
       )}
     </>
   )

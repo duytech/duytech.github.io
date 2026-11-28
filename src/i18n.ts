@@ -150,6 +150,6 @@ export function useLang() {
   return useContext(LangContext)
 }
 
-export function useT(): Dictionary {
+export function useText(): Dictionary {
   return dictionaries[useLang().lang]
 }

@@ -1,5 +1,5 @@
 import type { ComponentType } from 'react'
-import { useLang, useT, type Lang } from '../i18n.ts'
+import { useLang, useText, type Lang } from '../i18n.ts'
 import { UsFlag, VietnamFlag } from './Flags.tsx'
 
 const LANGUAGES: { lang: Lang; label: string; Flag: ComponentType }[] = [
@@ -10,9 +10,9 @@ const LANGUAGES: { lang: Lang; label: string; Flag: ComponentType }[] = [
 
 export function LanguageSwitcher() {
   const { lang, setLang } = useLang()
-  const t = useT()
+  const text = useText()
   return (
-    <div className="lang-switcher" role="group" aria-label={t.switchLanguage}>
+    <div className="lang-switcher" role="group" aria-label={text.switchLanguage}>
       {LANGUAGES.map(({ lang: code, label, Flag }) => (
         <button
           key={code}
