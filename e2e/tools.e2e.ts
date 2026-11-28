@@ -30,6 +30,13 @@ test.describe('salary calculator', () => {
     await expectMoney(resultValue(employer(page), 'Tổng chi phí công ty'), 36_450_000)
   })
 
+  test('tax per bracket', async ({ page }) => {
+    const bracketRows = page.locator('section').filter({ hasText: 'Chi tiết thuế TNCN theo bậc' }).locator('tbody tr')
+    await expect(bracketRows).toHaveCount(2)
+    await expectMoney(bracketRows.nth(0).locator('td').last(), 500_000)
+    await expectMoney(bracketRows.nth(1).locator('td').last(), 135_000)
+  })
+
   test('1 dependent lowers the tax', async ({ page }) => {
     await page.getByLabel('Số người phụ thuộc').fill('1')
     await expectMoney(resultValue(page, 'Thuế thu nhập cá nhân'), 257_500)
