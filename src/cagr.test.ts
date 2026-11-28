@@ -22,7 +22,7 @@ describe('calculateCagr', () => {
     expect(calculateCagr(100_000_000, 0, 4)).toEqual({ cagr: -1, totalGrowth: -1 })
   })
 
-  test('fractional years', () => {
+  test('fractional periods', () => {
     expect(calculateCagr(100, 121, 2).cagr).toBeCloseTo(0.1, 10)
     expect(calculateCagr(100, 110, 0.5).cagr).toBeCloseTo(0.21, 10)
   })

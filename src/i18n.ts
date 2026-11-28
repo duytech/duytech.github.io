@@ -60,14 +60,15 @@ const vi = {
   loanDisclaimer: 'Kết quả chỉ mang tính tham khảo, lãi suất thực tế tùy ngân hàng.',
 
   navCagr: 'Tính CAGR',
-  cagrToolDesc: 'Tính tốc độ tăng trưởng kép hàng năm (CAGR) từ giá trị đầu, giá trị cuối và số năm.',
+  cagrToolDesc: 'Tính tốc độ tăng trưởng kép hàng năm (CAGR) từ giá trị đầu, giá trị cuối và số kỳ.',
   cagrTitle: 'Tính tốc độ tăng trưởng kép hàng năm (CAGR)',
   startValueLabel: 'Giá trị ban đầu (VNĐ)',
   endValueLabel: 'Giá trị cuối kỳ (VNĐ)',
-  yearsLabel: 'Số năm',
+  periodsLabel: 'Số kỳ',
+  periodsHint: 'Một kỳ có thể là năm, tháng, tuần hoặc khoảng thời gian bất kỳ. Kết quả là tốc độ tăng trưởng mỗi kỳ.',
   totalGrowth: 'Tổng tăng trưởng',
-  cagrResult: 'CAGR (%/năm)',
-  enterCagr: 'Nhập giá trị ban đầu, giá trị cuối kỳ và số năm để xem kết quả.',
+  cagrResult: 'CAGR (%/kỳ)',
+  enterCagr: 'Nhập giá trị ban đầu, giá trị cuối kỳ và số kỳ để xem kết quả.',
 }
 
 // Typed from `vi`, so a missing or extra key is a compile error.
@@ -127,14 +128,15 @@ const en: typeof vi = {
   loanDisclaimer: 'Results are for reference only; actual rates depend on the bank.',
 
   navCagr: 'CAGR calculator',
-  cagrToolDesc: 'Calculate compound annual growth rate (CAGR) from a start value, end value and number of years.',
+  cagrToolDesc: 'Calculate compound annual growth rate (CAGR) from a start value, end value and number of periods.',
   cagrTitle: 'Compound annual growth rate (CAGR) calculator',
   startValueLabel: 'Start value (VND)',
   endValueLabel: 'End value (VND)',
-  yearsLabel: 'Number of years',
+  periodsLabel: 'Number of periods',
+  periodsHint: 'A period can be a year, month, week or any time span. The result is the growth rate per period.',
   totalGrowth: 'Total growth',
-  cagrResult: 'CAGR (% per year)',
-  enterCagr: 'Enter the start value, end value and number of years to see the result.',
+  cagrResult: 'CAGR (% per period)',
+  enterCagr: 'Enter the start value, end value and number of periods to see the result.',
 }
 
 export type Dictionary = typeof vi
