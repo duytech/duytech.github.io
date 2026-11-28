@@ -15,6 +15,9 @@ export function HomePage() {
         <li>
           <Link to="/loan-calculator">{t.navLoan}</Link>: {t.loanToolDesc}
         </li>
+        <li>
+          <Link to="/cagr-calculator">{t.navCagr}</Link>: {t.cagrToolDesc}
+        </li>
       </ul>
     </>
   )
