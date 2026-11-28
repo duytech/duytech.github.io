@@ -124,6 +124,11 @@ main {
   gap: 24px;
 }
 
+/* Grid items default to min-width: auto, which lets wide tables push the page past the screen. */
+.salary-results > * {
+  min-width: 0;
+}
+
 .salary-results h2 {
   font-size: 1.1rem;
   margin: 0 0 8px;
