@@ -64,7 +64,7 @@ export interface SalaryResult {
 }
 
 /** Progressive PIT on monthly taxable income. */
-export function calcPit(taxableIncome: number): number {
+export function calculatePersonalIncomeTax(taxableIncome: number): number {
   let tax = 0
   let lower = 0
   for (const [upper, rate] of TAX_BRACKETS) {
@@ -84,7 +84,7 @@ function insurance(base: number, region: Region, rates: typeof EMPLOYEE_RATES): 
   return { bhxh, bhyt, bhtn, total: bhxh + bhyt + bhtn }
 }
 
-export function calcNet({ gross, insuranceBase, region, dependents, allInclusive }: SalaryInput): SalaryResult {
+export function calculateNetSalary({ gross, insuranceBase, region, dependents, allInclusive }: SalaryInput): SalaryResult {
   // Inputs come from a form: treat negatives as 0 and dependents as a whole number.
   gross = Math.max(0, gross)
   const base = Math.max(0, insuranceBase ?? gross)
@@ -96,7 +96,7 @@ export function calcNet({ gross, insuranceBase, region, dependents, allInclusive
   const income = allInclusive ? gross - employer.total : gross
   const deduction = SELF_DEDUCTION + deps * DEPENDENT_DEDUCTION
   const taxableIncome = Math.max(0, income - employee.total - deduction)
-  const tax = calcPit(taxableIncome)
+  const tax = calculatePersonalIncomeTax(taxableIncome)
 
   return {
     gross,

@@ -12,6 +12,9 @@ export function HomePage() {
         <li>
           <Link to="/salary-calculator">{t.navSalary}</Link>: {t.salaryToolDesc}
         </li>
+        <li>
+          <Link to="/loan-calculator">{t.navLoan}</Link>: {t.loanToolDesc}
+        </li>
       </ul>
     </>
   )
