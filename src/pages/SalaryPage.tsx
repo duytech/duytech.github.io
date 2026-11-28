@@ -6,7 +6,7 @@ import {
   EFFECTIVE_FROM,
   EMPLOYEE_RATES,
   EMPLOYER_RATES,
-  calcNet,
+  calculateNetSalary,
   type Region,
 } from '../salary.ts'
 
@@ -30,7 +30,7 @@ export function SalaryPage() {
   )
   // All-inclusive: employer insurance is already inside gross, so it is not added on top.
   const plus = allInclusive ? '' : '+'
-  const result = gross ? calcNet({ gross, insuranceBase, region, dependents, allInclusive }) : undefined
+  const result = gross ? calculateNetSalary({ gross, insuranceBase, region, dependents, allInclusive }) : undefined
 
   return (
     <>

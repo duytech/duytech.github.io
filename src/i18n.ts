@@ -38,6 +38,26 @@ const vi = {
   tax: 'Thuế thu nhập cá nhân',
   net: 'Lương Net',
   employerCost: 'Tổng chi phí công ty',
+
+  navLoan: 'Tính tiền vay',
+  loanToolDesc: 'Tính số tiền trả hàng tháng khi vay ngân hàng: dư nợ giảm dần hoặc trả đều hàng tháng.',
+  loanTitle: 'Tính tiền vay ngân hàng',
+  loanAmountLabel: 'Số tiền vay (VNĐ)',
+  rateLabel: 'Lãi suất (%/năm)',
+  termLabel: 'Thời gian vay (tháng)',
+  methodLabel: 'Phương pháp tính',
+  methodNames: { reducing: 'Gốc cố định, lãi giảm dần', annuity: 'Gốc, lãi chia đều hàng tháng' },
+  firstPayment: 'Số tiền trả tháng đầu',
+  totalInterest: 'Tổng lãi phải trả',
+  totalPayment: 'Tổng gốc và lãi phải trả',
+  scheduleHeading: 'Lịch trả nợ',
+  colMonth: 'Kỳ',
+  colInterest: 'Lãi',
+  colPrincipal: 'Gốc',
+  colPayment: 'Số tiền trả',
+  colBalance: 'Dư nợ còn lại',
+  enterLoan: 'Nhập số tiền vay, lãi suất và thời gian vay để xem kết quả.',
+  loanDisclaimer: 'Kết quả chỉ mang tính tham khảo, lãi suất thực tế tùy ngân hàng.',
 }
 
 // Typed from `vi`, so a missing or extra key is a compile error.
@@ -75,6 +95,26 @@ const en: typeof vi = {
   tax: 'Personal income tax',
   net: 'Net salary',
   employerCost: 'Total employer cost',
+
+  navLoan: 'Loan calculator',
+  loanToolDesc: 'Calculate monthly bank loan repayments: declining balance or equal monthly payments.',
+  loanTitle: 'Bank loan calculator',
+  loanAmountLabel: 'Loan amount (VND)',
+  rateLabel: 'Interest rate (%/year)',
+  termLabel: 'Loan term (months)',
+  methodLabel: 'Repayment method',
+  methodNames: { reducing: 'Fixed principal, declining interest', annuity: 'Equal monthly payments' },
+  firstPayment: 'First month payment',
+  totalInterest: 'Total interest',
+  totalPayment: 'Total principal and interest',
+  scheduleHeading: 'Repayment schedule',
+  colMonth: 'Month',
+  colInterest: 'Interest',
+  colPrincipal: 'Principal',
+  colPayment: 'Payment',
+  colBalance: 'Remaining balance',
+  enterLoan: 'Enter the loan amount, interest rate and term to see the result.',
+  loanDisclaimer: 'Results are for reference only; actual rates depend on the bank.',
 }
 
 export type Dictionary = typeof vi

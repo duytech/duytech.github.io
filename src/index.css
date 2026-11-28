@@ -156,6 +156,20 @@ main {
   opacity: 0.7;
 }
 
+.table-scroll {
+  overflow-x: auto;
+}
+
+.salary-results .schedule th {
+  text-align: right;
+  padding-left: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.salary-results .schedule thead th {
+  font-weight: 600;
+}
+
 .salary-results tr.total th,
 .salary-results tr.total td {
   font-weight: 700;
