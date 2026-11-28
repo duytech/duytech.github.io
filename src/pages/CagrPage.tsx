@@ -6,15 +6,15 @@ import { useText } from '../i18n.ts'
 
 export function CagrPage() {
   const text = useText()
-  const yearsId = useId()
+  const periodsId = useId()
   const [startValue, setStartValue] = useState<number | undefined>()
   const [endValue, setEndValue] = useState<number | undefined>()
-  const [years, setYears] = useState('')
+  const [periods, setPeriods] = useState('')
 
   const percent = new Intl.NumberFormat(text.locale, { style: 'percent', maximumFractionDigits: 2 })
-  const period = Number(years)
-  const valid = startValue && endValue !== undefined && years !== '' && period > 0
-  const result = valid ? calculateCagr(startValue, endValue, period) : undefined
+  const periodCount = Number(periods)
+  const valid = startValue && endValue !== undefined && periods !== '' && periodCount > 0
+  const result = valid ? calculateCagr(startValue, endValue, periodCount) : undefined
 
   return (
     <>
@@ -24,16 +24,20 @@ export function CagrPage() {
         <MoneyField label={text.startValueLabel} value={startValue} onChange={setStartValue} locale={text.locale} />
         <MoneyField label={text.endValueLabel} value={endValue} onChange={setEndValue} locale={text.locale} />
         <div className="field">
-          <label htmlFor={yearsId}>{text.yearsLabel}</label>
+          <label htmlFor={periodsId}>{text.periodsLabel}</label>
           <input
-            id={yearsId}
+            id={periodsId}
             type="number"
             inputMode="decimal"
             min={0.1}
             step="any"
-            value={years}
-            onChange={(e) => setYears(e.target.value)}
+            value={periods}
+            onChange={(e) => setPeriods(e.target.value)}
+            aria-describedby={`${periodsId}-hint`}
           />
+          <small id={`${periodsId}-hint`} className="hint">
+            {text.periodsHint}
+          </small>
         </div>
       </form>
 
