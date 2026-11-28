@@ -27,14 +27,14 @@ export interface LoanResult {
 }
 
 export function calculateLoan({ principal, annualRate, months, method }: LoanInput): LoanResult {
-  const r = annualRate / 12
+  const monthlyRate = annualRate / 12
   const fixedPrincipal = Math.round(principal / months)
-  const annuity = r === 0 ? fixedPrincipal : Math.round((principal * r) / (1 - (1 + r) ** -months))
+  const annuity = monthlyRate === 0 ? fixedPrincipal : Math.round((principal * monthlyRate) / (1 - (1 + monthlyRate) ** -months))
 
   const rows: LoanRow[] = []
   let balance = principal
   for (let month = 1; month <= months; month++) {
-    const interest = Math.round(balance * r)
+    const interest = Math.round(balance * monthlyRate)
     // Last month clears whatever rounding left over, so the balance ends at exactly 0.
     const paid =
       month === months ? balance : Math.min(balance, method === 'reducing' ? fixedPrincipal : annuity - interest)
